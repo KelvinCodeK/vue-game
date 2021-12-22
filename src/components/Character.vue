@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'yourCharacter',
+  name: 'Character',
   props: ['character', 'currentHealth'],
   data() {
       return {
@@ -49,7 +49,6 @@ export default {
     height: 100%;
     width: 100%;
 }
-
 .medium-health {
     background-color: orange;
 }
@@ -61,19 +60,5 @@ export default {
     width: 20rem;
     border: 1px solid black;
     height: 2rem;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>

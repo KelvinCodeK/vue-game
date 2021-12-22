@@ -1,12 +1,12 @@
 <template>
 <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
-    <your-character @first-attack="attackHandler" 
-    :character="character" 
+    <character @first-attack="attackHandler" 
+    :characterContent="characterContent" 
     :currentHealth="yourHealthBar"/>
 </template>
 
 <script>
-import yourCharacter from './components/yourCharacter.vue'
+import Character from './components/Character.vue'
 // Experience atc toevoegen met een localstorage
 // critical hit calculator
 
@@ -20,7 +20,7 @@ export default {
     return {
       yourHealthBar: 100,
       opponentHealthBar: 100,
-      character: {
+      characterContent: {
         name: 'charizard',
         attackOne: 'swipe',
         attackTwo: 'lash',
@@ -30,7 +30,7 @@ export default {
     }
   },
   components: {
-    'your-character': yourCharacter
+    'character': Character
   },
   methods: {
     attackHandler(min, max) {
@@ -58,6 +58,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
