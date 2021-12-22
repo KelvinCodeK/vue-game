@@ -2,7 +2,8 @@
 <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
     <character @first-attack="attackHandler" 
     :characterContent="characterContent" 
-    :currentHealth="yourHealthBar"/>
+    :currentHealth="yourHealthBar"
+    />
 </template>
 
 <script>
