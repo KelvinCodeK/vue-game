@@ -1,9 +1,16 @@
 <template>
+  <div>
 <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
     <character @first-attack="attackHandler" 
-    :characterContent="characterContent" 
+    :character="yourCharacter" 
     :currentHealth="yourHealthBar"
     />
+
+    <character @first-attack="attackHandler" 
+    :character="opponent" 
+    :currentHealth="opponentHealthBar"
+    />
+  </div>
 </template>
 
 <script>
@@ -21,12 +28,25 @@ export default {
     return {
       yourHealthBar: 100,
       opponentHealthBar: 100,
-      characterContent: {
+      yourCharacter: {
+        id: 'you',
         name: 'charizard',
         attackOne: 'swipe',
+        attackOneMin: 5,
+        attackOneMax: 10,
         attackTwo: 'lash',
         attackThree: 'flame dance',
         attackFour: 'boulder',
+      },
+      opponent: {
+        id: 'opponent',
+        name: 'bulbazor',
+        attackOne: 'root',
+        attackOneMin: 15,
+        attackOneMax: 20,
+        attackTwo: 'leaf lash',
+        attackThree: 'rubble',
+        attackFour: 'dash',
       }
     }
   },
@@ -34,14 +54,25 @@ export default {
     'character': Character
   },
   methods: {
-    attackHandler(min, max) {
+    attackHandler(min, max, id) {
       const value = attackCalculator(min, max);
-      if(this.yourHealthBar - value <= 0) {
-        this.yourHealthBar = 0;
+      if(id === 'you') {
+          if(this.opponentHealthBar - value <= 0) {
+          this.opponentHealthBar = 0;
+        }
+        else {
+          this.opponentHealthBar -= value;
+        }
       }
       else {
-        this.yourHealthBar -= value;
+        if(this.yourHealthBar - value <= 0) {
+          this.yourHealthBar = 0;
+        }
+        else {
+          this.yourHealthBar -= value;
+        }
       }
+
     }
   }
 }

@@ -37,7 +37,7 @@ export default {
   },
   methods: {
       firstAttack() {
-          this.$emit('first-attack', 5, 10);
+          this.$emit('first-attack', this.character.attackOneMin, this.character.attackOneMax, this.character.id);
       }
   }
 }
