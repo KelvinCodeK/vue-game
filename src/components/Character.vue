@@ -1,6 +1,8 @@
 <template>
     <section>
+        <header>
         <h2><em>{{ character.name }}</em></h2>
+        </header>
         <div class="healthbar-wrapper">
             <div 
             class="health" 
@@ -8,10 +10,14 @@
             :class="[{'low-health': lowHealth}, {'medium-health': mediumHealth}]">
             </div>
         </div>
+        <div class="button-row">
         <button @click="firstAttack">{{ character.attackOne }}</button>
         <button>{{ character.attackTwo }}</button>
+        </div>
+        <div class="button-row">
         <button>{{ character.attackThree }}</button>
         <button>{{ character.attackFour }}</button>
+        </div>
     </section>
 </template>
 
@@ -37,13 +43,29 @@ export default {
   },
   methods: {
       firstAttack() {
-          this.$emit('first-attack', this.character.attackOneMin, this.character.attackOneMax, this.character.id);
+          this.$emit('first-attack', this.character.attackOneMin, this.character.attackOneMax);
       }
   }
 }
 </script>
 
 <style scoped>
+section {
+    border: 1px solid black;
+    width: calc( 100px + 50vmin);
+    height: calc( 50px + 30vmin);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.button-row {
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .health {
     background-color: green;
     height: 100%;
@@ -57,8 +79,8 @@ export default {
     background-color: red;
 }
 .healthbar-wrapper {
-    width: 20rem;
-    border: 1px solid black;
-    height: 2rem;
+    width: calc( 50px + 25vmin);
+    height: calc( 10px + 2vmin);
+    border: 2px solid black;
 }
 </style>
