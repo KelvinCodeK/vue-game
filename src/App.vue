@@ -1,12 +1,16 @@
 <template>
   <div>
 <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
-    <character @first-attack="attackHandler" 
+    <character  
     :character="yourCharacter" 
     :currentHealth="yourHealthBar"
     class="your-char"
-    />
-    <character @first-attack="attackHandler" 
+    >
+    <buttons 
+    :character="yourCharacter" 
+    ></buttons>
+    </character>
+    <character
     :character="opponent" 
     :currentHealth="opponentHealthBar"
     class="opponent"
@@ -15,7 +19,8 @@
 </template>
 
 <script>
-import Character from './components/Character.vue'
+import Character from './components/Character.vue';
+import Buttons from './components/UI/Buttons.vue';
 // Experience atc toevoegen met een localstorage
 // critical hit calculator
 // toch yourchar en opponent componenten. Buttons zijn niet nodig bij opponent
@@ -50,11 +55,18 @@ export default {
       }
     }
   },
+  // Zorg dat je in de provide een methode doorstuurt. Niet de functie zelf in provide zet
+    provide() {
+    return {
+      attackHandler: this.attackHandlerMethod
+    }
+  },
   components: {
-    'character': Character
+    'character': Character,
+    'buttons': Buttons
   },
   methods: {
-    attackHandler(min, max) {
+    attackHandlerMethod(min, max) {
       const value = attackCalculator(min, max);
       if(this.opponentHealthBar - value <= 0) {
         this.opponentHealthBar = 0;
@@ -64,7 +76,6 @@ export default {
       }
       // const opponentAttack = '';
       const rndm = Math.floor(Math.random() * (4 - 1 + 1) + 1);
-      console.log(rndm);
       let opponentAttackValue;
       // this valt buiten de switch
       const that = this;

@@ -10,15 +10,9 @@
             :class="[{'low-health': lowHealth}, {'medium-health': mediumHealth}]">
             </div>
         </div>
-        <div class="button-row">
-        <button @click="firstAttack">{{ character.attackOne }}</button>
-        <button>{{ character.attackTwo }}</button>
-        </div>
-        <div class="button-row">
-        <button>{{ character.attackThree }}</button>
-        <button>{{ character.attackFour }}</button>
-        </div>
+        <slot></slot>
     </section>
+
 </template>
 
 <script>
@@ -40,11 +34,6 @@ export default {
               this.lowHealth = true;
           }
       }
-  },
-  methods: {
-      firstAttack() {
-          this.$emit('first-attack', this.character.attackOneMin, this.character.attackOneMax);
-      }
   }
 }
 </script>
@@ -58,12 +47,6 @@ section {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-}
-
-.button-row {
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
 }
 
 .health {
