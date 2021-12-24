@@ -1,7 +1,7 @@
 <template>
     <section>
         <header>
-        <h2><em>{{ character.name }}</em></h2>
+        <h2 :class="{dead: character.dead}">{{ character.name }}</h2>
         </header>
         <div class="healthbar-wrapper">
             <div 
@@ -47,8 +47,7 @@ section {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-}
-
+} 
 .health {
     background-color: green;
     height: 100%;
@@ -65,5 +64,8 @@ section {
     width: calc( 50px + 25vmin);
     height: calc( 10px + 2vmin);
     border: 2px solid black;
+}
+.dead {
+    color: red;
 }
 </style>

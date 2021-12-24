@@ -1,11 +1,11 @@
 <template>
     <div class="button-row">
-    <button @click="attackHandler(character.attackOneMin, character.attackOneMax)">{{ character.attackOne }}</button>
-    <button>{{ character.attackTwo }}</button>
+    <button :disabled="disabled" @click="attackHandler(character.attackOneMin, character.attackOneMax)">{{ character.attackOne }}</button>
+    <button :disabled="disabled" @click="attackHandler(character.attackTwoMin, character.attackTwoMax)">{{ character.attackTwo }}</button>
     </div>
     <div class="button-row">
-    <button>{{ character.attackThree }}</button>
-    <button>{{ character.attackFour }}</button>
+    <button :disabled="disabled" @click="attackHandler(character.attackThreeMin, character.attackThreeMax)">{{ character.attackThree }}</button>
+    <button :disabled="disabled" @click="attackHandler(character.attackFourMin, character.attackFourMax)">{{ character.attackFour }}</button>
     </div>
 </template>
 
@@ -13,13 +13,21 @@
 
 export default({
     name: 'Buttons',
-    props: ['character'],
+    props: ['character', 'disabled'],
     inject: ['attackHandler']
 })
 </script>
 
-
 <style scoped>
+button {
+    font-size: calc(5px + 1.1vmin);
+    font-weight: bold;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 .button-row {
     width: 80%;
     display: flex;

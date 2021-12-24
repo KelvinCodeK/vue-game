@@ -8,6 +8,7 @@
     >
     <buttons 
     :character="yourCharacter" 
+    :disabled="disableButtons"
     ></buttons>
     </character>
     <character
@@ -35,23 +36,38 @@ export default {
     return {
       yourHealthBar: 100,
       opponentHealthBar: 100,
+      disableButtons: false,
       yourCharacter: {
+        dead: false,
         name: 'charizard',
         attackOne: 'swipe',
         attackOneMin: 5,
         attackOneMax: 10,
         attackTwo: 'lash',
+        attackTwoMin: 15,
+        attackTwoMax: 20,
         attackThree: 'flame dance',
+        attackThreeMin: 10,
+        attackThreeMax: 15,
         attackFour: 'boulder',
+        attackFourMin: 8,
+        attackFourMax: 13,
       },
       opponent: {
+        dead: false,
         name: 'bulbazor',
         attackOne: 'root',
-        attackOneMin: 15,
-        attackOneMax: 20,
+        attackOneMin: 5,
+        attackOneMax: 10,
         attackTwo: 'leaf lash',
+        attackTwoMin: 15,
+        attackTwoMax: 20,
         attackThree: 'rubble',
+        attackThreeMin: 5,
+        attackThreeMax: 10,
         attackFour: 'dash',
+        attackFourMin: 7,
+        attackFourMax: 12
       }
     }
   },
@@ -65,11 +81,15 @@ export default {
     'character': Character,
     'buttons': Buttons
   },
+
   methods: {
     attackHandlerMethod(min, max) {
       const value = attackCalculator(min, max);
       if(this.opponentHealthBar - value <= 0) {
         this.opponentHealthBar = 0;
+        this.opponent.dead = true;
+        this.disableButtons = true;
+        return;
       }
       else {
         this.opponentHealthBar -= value;
@@ -77,25 +97,26 @@ export default {
       // const opponentAttack = '';
       const rndm = Math.floor(Math.random() * (4 - 1 + 1) + 1);
       let opponentAttackValue;
-      // this valt buiten de switch
       const that = this;
       switch(rndm) {
           case 1:
           opponentAttackValue = attackCalculator(that.opponent.attackOneMin, that.opponent.attackOneMax);
           break;
         case 2:
-          opponentAttackValue = attackCalculator(that.opponent.attackOneMin, that.opponent.attackOneMax);
+          opponentAttackValue = attackCalculator(that.opponent.attackTwoMin, that.opponent.attackTwoMax);
           break;
         case 3:
-          opponentAttackValue = attackCalculator(that.opponent.attackOneMin, that.opponent.attackOneMax);
+          opponentAttackValue = attackCalculator(that.opponent.attackThreeMin, that.opponent.attackThreeMax);
           break;
         case 4:
-          opponentAttackValue = attackCalculator(that.opponent.attackOneMin, that.opponent.attackOneMax);
+          opponentAttackValue = attackCalculator(that.opponent.attackFourMin, that.opponent.attackFourMax);
           break;   
       }
-      console.log(opponentAttackValue);
       if(this.yourHealthBar - opponentAttackValue <= 0) {
         this.yourHealthBar = 0;
+        this.yourCharacter.dead = true;
+        this.disableButtons = true;
+        return;
       }
       else {
         this.yourHealthBar -= opponentAttackValue;
