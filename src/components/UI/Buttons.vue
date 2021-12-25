@@ -19,14 +19,6 @@ export default({
 </script>
 
 <style scoped>
-button {
-    font-size: calc(5px + 1.1vmin);
-    font-weight: bold;
-    cursor: pointer;
-    background-color: white;
-    border-radius: 5px;
-    padding: 5px;
-}
 
 .button-row {
     width: 80%;

@@ -10,7 +10,8 @@
             :class="[{'low-health': lowHealth}, {'medium-health': mediumHealth}]">
             </div>
         </div>
-        <slot></slot>
+        <slot name="buttons"></slot>
+        <slot name="experienceBar"></slot>
     </section>
 
 </template>
