@@ -28,10 +28,14 @@ export default {
   },
   watch: {
       currentHealth(value) {
-          if( value > 20 && value <= 50 ) {
+          if( value > 50) {
+              this.mediumHealth = false;
+              this.lowHealth = false;
+          }
+          else if( value > 20 && value <= 50 ) {
               this.mediumHealth = true;
           }
-          else if(value <= 20) {
+          else{
               this.lowHealth = true;
           }
       }

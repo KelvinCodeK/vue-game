@@ -2,15 +2,15 @@
   <div>
 <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
    <!-- vue devtools is buggy. console loggen blijft het meest betrouwbaar -->
+   <h1>{{ totalHealth }}</h1>
     <character  
     :character="yourCharacter[selectedCharacter]" 
-    :currentHealth="yourHealthBar"
+    :currentHealth="yourCharacter[selectedCharacter].healthbar"
     class="your-char"
     >
     <template v-slot:buttons>
     <buttons 
-    :character="yourCharacter[selectedCharacter]" 
-    :disabled="disableButtons"
+    :character="yourCharacter[selectedCharacter]"
     ></buttons>
     </template>
     <template v-slot:experienceBar>
@@ -19,8 +19,8 @@
       </template>
     </character>
     <character
-    :character="opponent[0]" 
-    :currentHealth="opponentHealthBar"
+    :character="opponent[currentOpponent]" 
+    :currentHealth="opponent[currentOpponent].healthbar"
     class="opponent"
     />
     <character-select @selected-char="selectedHandler" :character="yourCharacter" >
@@ -45,12 +45,12 @@ export default {
   name: 'App',
   data() {
     return {
-      yourHealthBar: 100,
-      opponentHealthBar: 100,
-      disableButtons: false,
       selectedCharacter: 0,
+      currentOpponent: 0,
       yourCharacter: [{
         dead: false,
+        disableButtons: false,
+        healthbar: 100,
         number: 0,
         experience: 10,
         name: 'charizard',
@@ -69,6 +69,8 @@ export default {
       },
       {
         dead: false,
+        disableButtons: false,
+        healthbar: 100,
         number: 1,
         experience: 0,
         name: 'pikachu',
@@ -88,6 +90,7 @@ export default {
       opponent: [
         {
         dead: false,
+        healthbar: 100,
         number: 0,
         name: 'bulbazor',
         attackOne: 'root',
@@ -105,6 +108,7 @@ export default {
       },
       {
         dead: false,
+        healthbar: 100,
         number: 1,
         name: 'charmendar',
         attackOne: 'root',
@@ -138,20 +142,27 @@ export default {
 
   methods: {
     selectedHandler(nr) {
-      console.log(nr);
       this.selectedCharacter = nr;
-      console.log(this.selectedCharacter);
     },
     attackHandlerMethod(min, max) {
       const value = attackCalculator(min, max);
-      if(this.opponentHealthBar - value <= 0) {
-        this.opponentHealthBar = 0;
-        this.opponent[0].dead = true;
-        this.disableButtons = true;
+      if(this.opponent[this.currentOpponent].healthbar - value <= 0) {
+        this.opponent[this.currentOpponent].healthbar = 0;
+        this.opponent[this.currentOpponent].dead = true;
+        this.yourCharacter[this.selectedCharacter].experience += 20;
+      if(this.opponent[this.currentOpponent + 1]) {
+          setTimeout(() => {
+          this.currentOpponent++;
+          this.opponent[this.currentOpponent].healthbar = 100;
+        }, 2000);
+        }
+        else {
+          alert('End of combat');
+        }
         return;
       }
       else {
-        this.opponentHealthBar -= value;
+        this.opponent[this.currentOpponent].healthbar -= value;
       }
       // const opponentAttack = '';
       const rndm = Math.floor(Math.random() * (4 - 1 + 1) + 1);
@@ -171,14 +182,31 @@ export default {
           opponentAttackValue = attackCalculator(that.opponent[0].attackFourMin, that.opponent[0].attackFourMax);
           break;   
       }
-      if(this.yourHealthBar - opponentAttackValue <= 0) {
-        this.yourHealthBar = 0;
+      if(this.yourCharacter[this.selectedCharacter].healthbar - opponentAttackValue <= 0) {
+        this.yourCharacter[this.selectedCharacter].healthbar = 0;
         this.yourCharacter[0].dead = true;
-        this.disableButtons = true;
+        this.yourCharacter[this.selectedCharacter].disableButtons = true;
         return;
       }
       else {
-        this.yourHealthBar -= opponentAttackValue;
+        this.yourCharacter[this.selectedCharacter].healthbar -= opponentAttackValue;
+      }
+    }
+  },
+  // computed properties zijn lazy loaded. Je moet ze dus ergens op de pagina referencen om het goed door te krijgen en dingen te laten gebeuren o.b.v
+  computed: {
+    totalHealth() {
+      let total = 0;
+      let x;
+      for(x in this.yourCharacter) {
+        total += this.yourCharacter[x].healthbar;
+      }
+      if(total > 0) {
+        return total;
+      }
+      else {
+        alert('you lost');
+        return 0;
       }
     }
   }
