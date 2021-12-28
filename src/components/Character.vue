@@ -1,7 +1,7 @@
 <template>
     <section>
         <header>
-        <h2 :class="{dead: character.dead}">{{ character.name }}</h2>
+        <h2 :class="{dead: character.dead, animated: animation}">{{ character.name }}</h2>
         </header>
         <div class="healthbar-wrapper">
             <div 
@@ -19,7 +19,7 @@
 <script>
 export default {
   name: 'Character',
-  props: ['character', 'currentHealth'],
+  props: ['character', 'currentHealth','animation'],
   data() {
       return {
           mediumHealth: false,
@@ -53,6 +53,25 @@ section {
     justify-content: space-evenly;
     align-items: center;
 } 
+
+.animated {
+    animation: slide 0.3s ease-out;
+}
+
+@keyframes slide{
+    0% {
+
+    }
+
+    50% {
+        transform: translate(20px , -15px);
+    }
+
+    100% {
+
+     }
+}
+
 .health {
     background-color: green;
     height: 100%;

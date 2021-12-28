@@ -6,6 +6,7 @@
     <character  
     :character="yourCharacter[selectedCharacter]" 
     :currentHealth="yourCharacter[selectedCharacter].healthbar"
+    :animation="animation"
     class="your-char"
     >
     <template v-slot:buttons>
@@ -47,6 +48,7 @@ export default {
     return {
       selectedCharacter: 0,
       currentOpponent: 0,
+      animation: false,
       yourCharacter: [{
         dead: false,
         disableButtons: false,
@@ -145,6 +147,10 @@ export default {
       this.selectedCharacter = nr;
     },
     attackHandlerMethod(min, max) {
+      this.animation = true;
+      setTimeout(() => {
+        this.animation = false;
+      }, 301);
       const value = attackCalculator(min, max);
       if(this.opponent[this.currentOpponent].healthbar - value <= 0) {
         this.opponent[this.currentOpponent].healthbar = 0;
@@ -193,7 +199,7 @@ export default {
       }
     }
   },
-  // computed properties zijn lazy loaded. Je moet ze dus ergens op de pagina referencen om het goed door te krijgen en dingen te laten gebeuren o.b.v
+  // computed properties zijn lazy loaded. Je moet ze dus ergens op de pagina referencen om het goed door te krijgen en dingen te laten gebeuren o.b.v[]
   computed: {
     totalHealth() {
       let total = 0;
