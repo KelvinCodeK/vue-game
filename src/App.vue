@@ -1,9 +1,12 @@
 <template>
   <div>
     <!-- op de character props kan je een index toevoegen die uit een data property komt wann characters worden gekozen / toegewezen -->
-    <!-- vue devtools is buggy. console loggen blijft het meest betrouwbaar -->
+    <!-- vue devtools is buggy. console loggen blijft het meest betrouwbaar -->'
+    <!-- Experience atc toevoegen met een localstorage
+    critical hit calculator
+    toch yourchar en opponent componenten. Buttons zijn niet nodig bij opponent
+    computed properties zijn lazy loaded. Je moet ze dus ergens op de pagina referencen om het goed door te krijgen en dingen te laten gebeuren o.b.v[] -->
    <h1>{{ totalHealth }}</h1>
-   <!-- friendly en enemy componenten maken -->
     <character  class="your-char">
     <template v-slot:buttons>
     <buttons />
@@ -23,10 +26,7 @@ import Enemy from './components/Enemy.vue';
 import Buttons from './components/UI/Buttons.vue';
 import characterSelect from './components/characterSelect.vue';
 import experienceBar from './components/experienceBar.vue';
-// Experience atc toevoegen met een localstorage
-// critical hit calculator
-// toch yourchar en opponent componenten. Buttons zijn niet nodig bij opponent
- // computed properties zijn lazy loaded. Je moet ze dus ergens op de pagina referencen om het goed door te krijgen en dingen te laten gebeuren o.b.v[]
+
 export default {
   name: 'App',
   components: {
