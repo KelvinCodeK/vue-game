@@ -1,11 +1,11 @@
 <template>
     <div class="button-row">
-    <button :disabled="character.disableButtons" @click="attackHandler(character.attackOneMin, character.attackOneMax)">{{ character.attackOne }}</button>
-    <button :disabled="character.disableButtons" @click="attackHandler(character.attackTwoMin, character.attackTwoMax)">{{ character.attackTwo }}</button>
+    <button :disabled="character.disableButtons" @click="attackHandler('one')">{{ character.attackOne }}</button>
+    <button :disabled="character.disableButtons" @click="attackHandler('two')">{{ character.attackTwo }}</button>
     </div>
     <div class="button-row">
-    <button :disabled="character.disableButtons" @click="attackHandler(character.attackThreeMin, character.attackThreeMax)">{{ character.attackThree }}</button>
-    <button :disabled="character.disableButtons" @click="attackHandler(character.attackFourMin, character.attackFourMax)">{{ character.attackFour }}</button>
+    <button :disabled="character.disableButtons" @click="attackHandler('three')">{{ character.attackThree }}</button>
+    <button :disabled="character.disableButtons" @click="attackHandler('four')">{{ character.attackFour }}</button>
     </div>
 </template>
 
@@ -13,8 +13,16 @@
 
 export default({
     name: 'Buttons',
-    props: ['character'],
-    inject: ['attackHandler']
+    methods: {
+        attackHandler(value) {
+            this.$store.commit('attackHandlerMethod', {attack: value});
+        }
+    },
+    computed: {
+        character() {
+          return this.$store.getters.character;
+        }
+    }
 })
 </script>
 

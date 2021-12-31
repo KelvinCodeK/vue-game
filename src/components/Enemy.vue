@@ -1,41 +1,36 @@
 <template>
     <section>
         <header>
-        <h2 :class="{dead: character.dead, animated: animation}">{{ character.name }}</h2>
+        <h2 :class="{dead: enemy.dead}">{{ enemy.name }}</h2>
         </header>
         <div class="healthbar-wrapper">
             <div 
             class="health" 
-            :style="{width: currentHealth + '%'}" 
-            :class="[{'low-health': characterLowHealth}, {'medium-health': characterMediumHealth}]">
+            :style="{width: enemyHealth + '%'}" 
+            :class="[{'low-health': enemyLowHealth}, {'medium-health': enemyMediumHealth}]">
             </div>
         </div>
-        <slot name="buttons"></slot>
-        <slot name="experienceBar"></slot>
     </section>
 
 </template>
 
 <script>
 export default {
-  name: 'Character',
+  name: 'Enemy',
   computed: {
-      character() {
-          return this.$store.getters.character;
+      enemy() {
+          return this.$store.getters.enemy;
       },
-      currentHealth() {
-          return this.$store.getters.currentHealth;
+      enemyHealth() {
+          return this.$store.getters.enemyHealth;
       },
-      animation() {
-          return this.$store.getters.animation;
+      enemyMediumHealth() {
+          return this.$store.getters.enemyMediumHealth;
       },
-      characterMediumHealth() {
-          return this.$store.getters.characterMediumHealth;
-      },
-      characterLowHealth() {
-          return this.$store.getters.characterLowHealth;
+      enemyLowHealth() {
+          return this.$store.getters.enemyLowHealth;
       }
-  },
+  }
 }
 </script>
 

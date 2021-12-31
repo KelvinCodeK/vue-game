@@ -2,7 +2,7 @@
 <section>
       <h3>Choose your character</h3>
     <ul>
-        <li v-for="item in character" :key="item.name"> <button :class="{active: isActive === item.number}" @click="selectedChar(item.number)">{{ item.name }}</button></li>
+        <li v-for="item in characters" :key="item.name"> <button @click="selectedChar(item.number)">{{ item.name }}</button></li>
     </ul>
     </section>
 </template>
@@ -11,17 +11,15 @@
 
 export default ({
     name: 'characterSelect',
-    props: ['character'],
-    data() {
-        return {
-            isActive: null
-        }
-    },
     methods: {
         selectedChar(nr) {
-            this.isActive = nr;
-            this.$emit('selected-char', nr);
+            this.$store.commit('selectedHandler', nr);
         }
+    },
+    computed: {
+         characters() {
+          return this.$store.getters.characters;
+      },
     }
 })
 </script>

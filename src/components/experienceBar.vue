@@ -11,7 +11,11 @@
 
 export default ({
     name: 'experienceBar',
-    props: ['experience'],
+    computed: {
+        experience() {
+            return this.$store.getters.experience;
+        }
+    }
 })
 </script>
 
